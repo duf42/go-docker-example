@@ -10,3 +10,9 @@ Windows
 ``` 
 make PLATFORM=windows/amd64
 ```
+
+## Unit tests
+
+```
+make unit-test
+```

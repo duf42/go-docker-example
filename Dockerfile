@@ -1,10 +1,13 @@
 FROM --platform=${BUILDPLATFORM} golang:1.14.3-alpine AS build
-WORKDIR /src
-ENV CGO_ENABLED=0
-COPY . .
 ARG TARGETOS
 ARG TARGETARCH
-RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/example .
+WORKDIR /src
+ENV CGO_ENABLED=0
+COPY go.* .
+RUN go mod download
+COPY . .
+RUN --mount=type=cache,target=/root/.cache/go-build \
+GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/example .
 
 FROM scratch AS bin-unix
 COPY --from=build /out/example /

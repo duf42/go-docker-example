@@ -6,7 +6,21 @@ Source : https://www.docker.com/blog/containerize-your-go-developer-environment-
 
 ## Compile
 
-Windows
+### Linux
+
+``` 
+make PLATFORM=linux/amd64
+```
+
+#### Notes
+
+Docker Buildx shall be installed 
+``` 
+docker buildx install
+``` 
+
+### Windows
+
 ``` 
 make PLATFORM=windows/amd64
 ```

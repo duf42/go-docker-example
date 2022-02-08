@@ -27,7 +27,7 @@ jobs:
       run: docker run --rm -v ${PWD}:/src -w /src golang:1.14.3-alpine go mod tidy
       
     - name: Build test image
-      run: docker build . --target unit-test -t example-test
+      run: docker build . --target unit-test --tag example-test:${{steps.vars.outputs.tag}}
       
     - name: Run tests
-      run: docker run --rm example-test
+      run: docker run example-test:${{steps.vars.outputs.tag}}

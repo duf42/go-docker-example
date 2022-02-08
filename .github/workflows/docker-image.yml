@@ -22,6 +22,7 @@ jobs:
       id: buildx
       with:
         install: true
+        driver: docker
         
     - name: Generate go.sum
       run: docker run --rm -v ${PWD}:/src -w /src golang:1.14.3-alpine go mod tidy

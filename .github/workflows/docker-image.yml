@@ -26,8 +26,8 @@ jobs:
     - name: Generate go.sum
       run: docker run --rm -v ${PWD}:/src -w /src golang:1.14.3-alpine go mod tidy
       
-    - name: Build test image
-      run: docker build . --target unit-test --tag example-test
-      
-    - name: Run tests
-      run: docker run example-test
+    - name: Build and run tests
+      run: 
+        docker build . --target unit-test --tag example-test
+        docker run example-test
+  

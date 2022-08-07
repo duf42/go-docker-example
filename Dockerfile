@@ -11,8 +11,8 @@ COPY ./tests .
 FROM base AS build
 ARG TARGETOS
 ARG TARGETARCH
-RUN --mount=type=cache,target=/root/.cache/go-build \
-GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/server .
+# RUN --mount=type=cache,target=/root/.cache/go-build \
+RUN GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/server .
 
 FROM base AS unit-test
 ENTRYPOINT ["go", "test"]

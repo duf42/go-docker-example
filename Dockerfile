@@ -5,9 +5,6 @@ ENV CGO_ENABLED=0
 COPY ./sources .
 COPY ./tests .
 
-RUN go mod init example
-RUN go mod download
-
 FROM base AS build
 RUN GOOS=linux GOARCH=amd64 go build -o /out/server .
 

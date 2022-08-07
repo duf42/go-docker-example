@@ -12,14 +12,15 @@ FROM base AS build
 ARG TARGETOS
 ARG TARGETARCH
 RUN --mount=type=cache,target=/root/.cache/go-build \
-GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/example .
+GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -o /out/server .
 
 FROM base AS unit-test
 ENTRYPOINT ["go", "test"]
 CMD ["-v", "."]
 
 FROM scratch AS bin-unix
-COPY --from=build /out/example /
+COPY --from=build /out/server /server
+CMD ["/server"]
 
 FROM bin-unix AS bin-linux
 FROM bin-unix AS bin-darwin

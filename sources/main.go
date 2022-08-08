@@ -1,23 +1,23 @@
 package main
 
 import (
-   "fmt"
-   "os"
-   "strings"
-   "github.com/pkg/errors"
+    "fmt"
+    "html"
+    "log"
+    "net/http"
+    "os"
 )
 
-func echo(args []string) error {
-   if len(args) < 2 {
-       return errors.New("no message to echo")
-   }
-   _, err := fmt.Println(strings.Join(args[1:], " "))
-   return err
-}
-
 func main() {
-   if err := echo(os.Args); err != nil {
-       fmt.Fprintf(os.Stderr, "%+v\n", err)
-       os.Exit(1)
-   }
+
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+    })
+
+    http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
+        fmt.Fprintf(w, "Hi")
+    })
+
+    log.Fatal(http.ListenAndServe(":" + os.Getenv("PORT"), nil))
+
 }

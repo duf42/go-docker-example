@@ -12,6 +12,9 @@ FROM base AS unit-test
 ENTRYPOINT ["go", "test"]
 CMD ["-v", "."]
 
-FROM scratch AS bin
-COPY --from=build /out/server /server
-CMD ["/server"]
+FROM alpine:latest
+
+RUN mkdir /install
+COPY --from=build /out/server /install/server
+
+CMD ["/install/server"]

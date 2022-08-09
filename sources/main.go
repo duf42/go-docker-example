@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "html"
+    //"html"
     "log"
     "net/http"
     "os"
@@ -10,9 +10,7 @@ import (
 
 func main() {
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
-    })
+    http.Handle("/", http.FileServer(http.Dir("/web")))
 
     http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
         fmt.Fprintf(w, "Hi")

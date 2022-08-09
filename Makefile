@@ -1,14 +1,16 @@
-all: bin/example
+all: bin
 
-PLATFORM=local
+.PHONY: dev
+dev: bin
+	@docker run --rm -d -p 4242:80 --name=server-dev -e PORT=80 go-server
 
-.PHONY: bin/example
-bin/example: go.sum
-	@docker build . --target bin --output bin/ --platform ${PLATFORM}
+.PHONY: bin
+bin: go.sum
+	@docker build . -t go-server
 
 .PHONY: unit-test
 build-test: go.sum
-	@docker build . --target unit-test -t example-test
+	@docker build . --target unit-test -t go-server-test
 unit-test: build-test
 	@docker run --rm example-test
 

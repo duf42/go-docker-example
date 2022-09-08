@@ -23,4 +23,3 @@ COPY ./web /web
 COPY VERSION /config/VERSION
 
 CMD ["/install/server"]
-

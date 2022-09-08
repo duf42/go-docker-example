@@ -1,8 +1,21 @@
-# Go example
+# API Routes
 
-Setup development environment using Docker
+## GET
 
-Source : https://www.docker.com/blog/containerize-your-go-developer-environment-part-1/
+- /parameter/\<name\>
+- /signal/\<name\>
+- /time
+- /version
+
+## POST
+
+- /start
+- /stop
+
+## PUT
+
+- /parameter/\<name\>/assign/\<value\>
+- /signal/\<name\>/assign/\<value\>
 
 ## Compile
 
@@ -30,3 +43,9 @@ make PLATFORM=windows/amd64
 ```
 make unit-test
 ```
+
+## Appendix : Go example
+
+Setup development environment using Docker
+
+Source : https://www.docker.com/blog/containerize-your-go-developer-environment-part-1/

@@ -1,23 +1,32 @@
 package main
 
 import (
-   "fmt"
-   "os"
-   "strings"
-   "github.com/pkg/errors"
+    "fmt"
+    //"html"
+    "log"
+    "net/http"
+    "os"
+    "io/ioutil"
 )
 
-func echo(args []string) error {
-   if len(args) < 2 {
-       return errors.New("no message to echo")
-   }
-   _, err := fmt.Println(strings.Join(args[1:], " "))
-   return err
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
 }
 
 func main() {
-   if err := echo(os.Args); err != nil {
-       fmt.Fprintf(os.Stderr, "%+v\n", err)
-       os.Exit(1)
-   }
+
+    http.Handle("/", http.FileServer(http.Dir("/web")))
+
+    http.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request){
+        
+        ver, err := ioutil.ReadFile("/config/VERSION")
+        check(err)
+        fmt.Fprintf(w,string(ver))
+
+    })
+
+    log.Fatal(http.ListenAndServe(":" + os.Getenv("PORT"), nil))
+
 }

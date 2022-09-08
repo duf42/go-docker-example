@@ -1,5 +1,26 @@
-FROM httpd:latest
+FROM golang:1.14.3-alpine AS base
+WORKDIR /src
+ENV CGO_ENABLED=0
 
-COPY ./index.html /usr/local/apache2/htdocs/index.html
-COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./sources .
+COPY ./tests .
+
+FROM base AS build
+RUN GOOS=linux GOARCH=amd64 go build -o /out/server .
+
+FROM base AS unit-test
+ENTRYPOINT ["go", "test"]
+CMD ["-v", "."]
+
+FROM alpine:latest
+
+RUN mkdir /config
+RUN mkdir /install
+RUN mkdir /web
+
+COPY --from=build /out/server /install/server
+COPY ./web /web
+COPY VERSION /config/VERSION
+
+CMD ["/install/server"]
 

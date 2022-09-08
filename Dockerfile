@@ -14,7 +14,12 @@ CMD ["-v", "."]
 
 FROM alpine:latest
 
+RUN mkdir /config
 RUN mkdir /install
+RUN mkdir /web
+
 COPY --from=build /out/server /install/server
+COPY ./web /web
+COPY VERSION /config/VERSION
 
 CMD ["/install/server"]

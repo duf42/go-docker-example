@@ -2,20 +2,29 @@ package main
 
 import (
     "fmt"
-    "html"
+    //"html"
     "log"
     "net/http"
     "os"
+    "io/ioutil"
 )
+
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
+}
 
 func main() {
 
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
-    })
+    http.Handle("/", http.FileServer(http.Dir("/web")))
 
-    http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request){
-        fmt.Fprintf(w, "Hi")
+    http.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request){
+        
+        ver, err := ioutil.ReadFile("/config/VERSION")
+        check(err)
+        fmt.Fprintf(w,string(ver))
+
     })
 
     log.Fatal(http.ListenAndServe(":" + os.Getenv("PORT"), nil))

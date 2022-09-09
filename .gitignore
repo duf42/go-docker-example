@@ -1,3 +1,5 @@
 bin/
+_build/
+Testing/
 go.mod
 go.sum

@@ -1,6 +1,11 @@
 
 #include "simple_lib.h"
 
+/* Global variables definition */
+Inputs_T Model_U;
+Outputs_T Model_Y;
+Parameters_T Model_P;
+
 void initialize(){
     /* Inputs */
     Model_U.current = 0.0;

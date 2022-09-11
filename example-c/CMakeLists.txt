@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.22)
 
 project(
@@ -6,10 +7,15 @@ project(
   LANGUAGES C)
 
 
+SET(LIB_OUT_PATH ${GoIntegrationC_SOURCE_DIR}/lib)
+SET(LIB_BIN_OUT_PATH ${GoIntegrationC_SOURCE_DIR}/test/bin)
+
+include_directories(sources)
+link_directories(sources)
+
+# Library
 add_subdirectory(sources)
 
-# add_executable(MyExample simple_example.cpp)
-# target_link_libraries(MyExample PRIVATE MyLibExample)
-
+# Tests
 enable_testing()
 add_subdirectory(tests)

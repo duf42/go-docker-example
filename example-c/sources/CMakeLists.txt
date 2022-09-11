@@ -1,2 +1,4 @@
 
-add_library(SimpleLib simple_lib.c simple_lib.h)
+set(SOURCE_FILES simple_lib.c)
+
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})

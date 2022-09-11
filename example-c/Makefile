@@ -1,9 +1,17 @@
 
+.PHONY: build clean
+
 configure:
-	cmake -S . -B _build
+	@cmake . -B _build
 
-build:
-	cmake --build _build
+build: configure
+	@cmake --build _build
 
-test:
-	ctest --test-dir _build --output-on-failure --progress
+install: build
+	@cmake --install
+
+test: build
+	@ctest --test-dir _build --output-on-failure --progress
+
+clean:
+	rm -Rf _build

@@ -7,14 +7,14 @@ project(
   LANGUAGES C)
 
 
-SET(LIB_OUT_PATH ${GoIntegrationC_SOURCE_DIR}/lib)
-SET(LIB_BIN_OUT_PATH ${GoIntegrationC_SOURCE_DIR}/test/bin)
-
 include_directories(sources)
 link_directories(sources)
 
 # Library
 add_subdirectory(sources)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER simple_lib.h)
+install(TARGETS ${PROJECT_NAME} PUBLIC_HEADER DESTINATION ../lib)
 
 # Tests
 enable_testing()

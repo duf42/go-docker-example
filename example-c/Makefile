@@ -8,7 +8,7 @@ build: configure
 	@cmake --build _build
 
 install: build
-	@cmake --install
+	@cmake --install _build 
 
 test: build
 	@ctest --test-dir _build --output-on-failure --progress

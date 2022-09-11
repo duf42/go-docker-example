@@ -13,8 +13,9 @@ link_directories(sources)
 # Library
 add_subdirectory(sources)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER simple_lib.h)
-install(TARGETS ${PROJECT_NAME} PUBLIC_HEADER DESTINATION ../lib)
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER sources/simple_lib.h)
+install(TARGETS ${PROJECT_NAME} PUBLIC_HEADER DESTINATION lib)
+SET(CMAKE_INSTALL_PREFIX ..)
 
 # Tests
 enable_testing()

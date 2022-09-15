@@ -31,6 +31,8 @@ RUN mkdir /config && mkdir /deps && mkdir /install && mkdir /web
 ENV LD_LIBRARY_PATH=/deps
 
 COPY --from=build /out/server /install/server
+COPY --from=build /deps /deps
+
 COPY ./web /web
 COPY VERSION /config/VERSION
 

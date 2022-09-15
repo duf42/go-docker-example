@@ -11,11 +11,11 @@ clean:
 	@docker stop $(APP_NAME)-dev
 
 .PHONY: bin
-bin: go.sum
+bin: 
 	@docker build . -t $(APP_NAME)
 
 .PHONY: unit-test
-build-test: go.sum
+build-test: 
 	@docker build . --target unit-test -t $(APP_NAME)-test
 unit-test: build-test
 	@docker run --rm $(APP_NAME)-test

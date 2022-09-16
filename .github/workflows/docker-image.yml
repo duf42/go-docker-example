@@ -23,7 +23,7 @@ jobs:
         driver: docker
 
     - name: Build C library
-      run: docker run --rm -it -v ${PWD}:/data -w /data/example-c danger89/cmake make install
+      run: docker run -v ${PWD}:/data -w /data/example-c danger89/cmake make install
 
     - name: Build test container
       run: docker build . --target unit-test --tag example-test

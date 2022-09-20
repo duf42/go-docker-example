@@ -1,8 +1,10 @@
 FROM danger89/cmake as library
 
+ARG LIBRARY_SOURCE_FOLDER
+
 WORKDIR /src
 
-COPY ./example-c .
+COPY $LIBRARY_SOURCE_FOLDER .
 
 RUN make
 

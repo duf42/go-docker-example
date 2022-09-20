@@ -12,11 +12,11 @@ clean:
 
 .PHONY: bin
 bin: 
-	@docker build . -t $(APP_NAME)
+	@docker build . -t $(APP_NAME) --build-arg LIBRARY_SOURCE_FOLDER=./example-c
 
 .PHONY: unit-test
 build-test: 
-	@docker build . --target unit-test -t $(APP_NAME)-test
+	@docker build . --target unit-test -t $(APP_NAME)-test --build-arg LIBRARY_SOURCE_FOLDER=./example-c
 unit-test: build-test
 	@docker run --rm $(APP_NAME)-test
 

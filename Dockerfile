@@ -1,3 +1,11 @@
+FROM danger89/cmake as library
+
+WORKDIR /src
+
+COPY ./example-c .
+
+RUN make install
+
 FROM golang:1.14.3-alpine AS base
 
 # Install GCC
@@ -12,7 +20,7 @@ ENV GOOS=linux
 ENV GOARCH=amd64
 ENV CC=gcc
 
-COPY ./lib /deps
+COPY --from=library /src/lib /deps
 COPY ./sources .
 COPY ./tests .
 

@@ -5,6 +5,7 @@
 Inputs_T Model_U;
 Outputs_T Model_Y;
 Parameters_T Model_P;
+States_T Model_DW;
 
 void initialize(){
     /* Inputs */
@@ -14,6 +15,10 @@ void initialize(){
     Model_Y.command = 0.0;
     /* Parameters */
     Model_P.Kp      = 0.8;
+    Model_P.Ki      = 0.2;
+    Model_P.Ts      = 0.1;
+    /* States */
+    Model_DW.x      = 0;
 }
 
 void step(){
@@ -22,7 +27,8 @@ void step(){
 
     error = Model_U.target - Model_U.current;
 
-    Model_Y.command = error * Model_P.Kp;
+    Model_DW.x = error * Model_P.Ki * Model_P.Ts + Model_DW.x;
+    Model_Y.command = error * Model_P.Kp + Model_DW.x;
 
 }
 

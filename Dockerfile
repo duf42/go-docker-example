@@ -4,7 +4,7 @@ WORKDIR /src
 
 COPY ./example-c .
 
-RUN make install
+RUN make
 
 FROM golang:1.14.3-alpine AS base
 

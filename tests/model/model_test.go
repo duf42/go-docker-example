@@ -10,17 +10,11 @@ func TestInitialize(t *testing.T) {
     Initialize()
 
     // [ VERIFY ]
-    if simdata.inputs.target != 0.1 {
-        t.Errorf("simdata.inputs.target = %f (expected = %f)", simdata.inputs.target, 0.1)            
+    if GetOutput("command") != 0.0 {
+        t.Errorf("command = %f (expected = %f)", GetOutput("command") , 0.0)            
     }
-    if simdata.inputs.current != 0.2 {
-        t.Errorf("simdata.inputs.current = %f (expected = %f)", simdata.inputs.current, 0.2)            
-    }
-    if simdata.outputs.command != 0.3 {
-        t.Errorf("simdata.outputs.command = %f (expected = %f)", simdata.outputs.command, 0.3)            
-    }
-    if simdata.parameters.Kp != 0.4 {
-        t.Errorf("simdata.parameters.Kp = %f (expected = %f)", simdata.parameters.Kp, 0.4)            
+    if GetParameter("Kp") != 0.8 {
+        t.Errorf("Kp = %f (expected = %f)", GetParameter("Kp"), 0.8)            
     }
 
 }
@@ -29,7 +23,7 @@ func TestGetOutputCommand(t *testing.T) {
     
     // [ SETUP ]
     name := "command"
-    expected := 0.3
+    expected := 0.0
 
     // [ EXERCISE ]
     actual := GetOutput(name)
@@ -45,7 +39,7 @@ func TestGetParameterKp(t *testing.T) {
     
     // [ SETUP ]
     name := "Kp"
-    expected := 0.4
+    expected := 0.8
 
     // [ EXERCISE ]
     actual := GetParameter(name)
@@ -67,8 +61,8 @@ func TestSetParameterKp(t *testing.T) {
     SetParameter(name, value)
 
     // [ VERIFY ]
-    if simdata.parameters.Kp != value {
-        t.Errorf("simdata.parameters.Kp = %f (expected = %f)", simdata.parameters.Kp, value)
+    if GetParameter("Kp") != value {
+        t.Errorf("Kp = %f (expected = %f)", GetParameter("Kp"), value)
     }
     
 }
@@ -81,11 +75,6 @@ func TestSetInputTarget(t *testing.T) {
 
     // [ EXERCISE ]
     SetInput(name,value)
-
-    // [ VERIFY ]
-    if simdata.inputs.target != 2.0 {
-        t.Errorf("simdata.inputs.target = %f (expected = %f)", simdata.inputs.target, 2.0)
-    }
     
 }
 
@@ -97,27 +86,22 @@ func TestSetInputCurrent(t *testing.T) {
 
     // [ EXERCISE ]
     SetInput(name,value)
-
-    // [ VERIFY ]
-    if simdata.inputs.current != 4.5 {
-        t.Errorf("simdata.inputs.current = %f (expected = %f)", simdata.inputs.current, 4.5)
-    }
     
 }
 
 func TestStep(t *testing.T) {
     
     // [ SETUP ]
-    simdata.inputs.target = 4.0
-    simdata.inputs.current = 2.0
-    simdata.parameters.Kp = 5
+    SetInput("target",4.0)
+    SetInput("current",2.0)
+    SetParameter("Kp",5)
 
     // [ EXERCISE ]
     Step()
 
     // [ VERIFY ]
-    if simdata.outputs.command != 10.0 {
-        t.Errorf("simdata.outputs.command = %f (expected = %f)", simdata.outputs.command, 10.0)
+    if GetOutput("command") != 10.04 {
+        t.Errorf("command = %f (expected = %f)", GetOutput("command"), 10.0)
     }
     
 }
